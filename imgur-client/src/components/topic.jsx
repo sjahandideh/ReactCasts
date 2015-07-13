@@ -3,6 +3,7 @@ var Actions = require('../actions');
 var ImageStore = require('../stores/image-store');
 var Reflux = require('reflux');
 var ImagePreview = require('./image-preview');
+var Infinite = require('react-infinite');
 
 module.exports = React.createClass({
   mixins: [
@@ -25,9 +26,13 @@ module.exports = React.createClass({
     </div>
   },
   renderImages: function() {
-    return this.state.images.slice(0, 20).map(function(image) {
+    var imageList = this.state.images.map(function(image) {
       return <ImagePreview key={image.id} {...image} />
     });
+
+    return <Infinite containerHeight={500} elementHeight={45}>
+      {imageList}
+    </Infinite>
   },
   onChange: function(event, images) {
     this.setState({images: images})
